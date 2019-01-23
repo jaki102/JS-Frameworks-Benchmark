@@ -60,16 +60,15 @@ export default{
       }
     },
     updateRows(){
-      for (var i = 0; i < this.rows.length; i++) {
-        var postNumber = Math.floor(Math.random() * 100) + 1;
-        var url = 'https://jsonplaceholder.typicode.com/posts/'+ postNumber;
-        var k = 0
-        var c = 0
+      for (let i = 0; i < this.rows.length; i++) {
+        const postNumber = Math.floor(Math.random() * 100) + 1;
+        const url = 'https://jsonplaceholder.typicode.com/posts/'+ postNumber;
+
         fetch(url)
           .then(response => response.json())
           .then(json => {
-            this.rows[k++].title = json.title
-            this.rows[c++].body = json.body})
+            this.rows[i].title = json.title
+            this.rows[i].body = json.body})
       }
     },
     swapRows(){
