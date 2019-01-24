@@ -48,6 +48,16 @@ class Table extends Component {
     return tempPosts;
   }
 
+  async updatePosts(n) {
+    this.start = +new Date()
+    let tempPosts = []
+    for (let i = 1; i <= n; i++) {
+      const id = Math.floor(Math.random() * 100) + 1;
+      await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`).then(res => tempPosts.push(res.data))
+    }
+    return tempPosts;
+  }
+
   add100Rows() {
     this.start = +new Date();
     this.getPosts(100).then(res => this.setState({posts: res}));
@@ -76,18 +86,7 @@ class Table extends Component {
     //   return row;
     // })
     // this.setState({ data: { ...this.state.data, posts: updatedRows } })
-    let rows = this.state.posts;
-    for (let i = 0; i < this.rows.length; i++) {
-      const postNumber = Math.floor(Math.random() * 100) + 1;
-      const url = 'https://jsonplaceholder.typicode.com/posts/'+ postNumber;
-
-      fetch(url)
-        .then(response => response.json())
-        .then(json => {
-          rows[i].title = json.title
-          rows[i].body = json.body})
-    }
-    this.setState({posts:rows})
+    this.updatePosts(this.state.posts.length).then(res => this.setState({posts: res}))
   }
 
   swapRows() {
